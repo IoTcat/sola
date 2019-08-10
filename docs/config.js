@@ -8,19 +8,19 @@ docute.init({
     nav: {
         default: [
             {
-                title: '说明文档', path: '/home/'
+                title: '说明文档', path: '/home'
             },
             {
-                title: '开发文档', path: '/home/dev/'
+                title: '开发文档', path: '/dev'
             },
             {
-                title: '开发日志', path: '/home/log/'
+                title: '开发日志', path: '/log'
             },
             {
-                title: '开源协议', path: '/home/MIT/'
+                title: '开源协议', path: '/MIT'
             },
             {
-                title: '捐赠', path: '/home/donate/'
+                title: '捐赠', path: '/donate'
             }
         ],
     },
