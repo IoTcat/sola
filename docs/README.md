@@ -7,6 +7,9 @@ Sola的意思是天空，被太阳照射的地方。祝愿Sola Proj能够成为�
 **主页**
 [https://home.yimian.xyz](https://home.yimian.xyz)
 
+**文档**
+[https://sola.yimian.xyz](https://sola.yimian.xyz)
+
 **FTP家庭网盘**
 [ftps://home.yimian.xyz:2121](ftps://home.yimian.xyz:2121)
 
