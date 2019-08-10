@@ -7,7 +7,8 @@
 
 ## 比特币
 
- - `19qzg2dKAWocgfivPvpm4UHKsfN9AkrLNK`
+ - `19qzg2dKAWocgfivPvpm4UHKsfN9AkrLNK`   
+ 
 ![Yimian Pay Bitcoin](https://cdn.yimian.xyz/yimian.pay/qrcode/bitcoin.png)
 
 
