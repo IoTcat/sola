@@ -17,7 +17,7 @@ docute.init({
     },
     plugins: [
         docsearch({
-            appid: 'AVHNTIOUCA',
+            applicationID: 'AVHNTIOUCA',
             apiKey: 'aec70fc192b330f4e8045e4dcbda9b9f',
             indexName: 'sola',
             tags: ['zh-Hans'],
