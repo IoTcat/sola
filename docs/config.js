@@ -11,11 +11,14 @@ docute.init({
                 title: '说明文档', path: '/home/'
             },
             {
-                title: '开发文档', path: '/dev/'
+                title: '开发文档', path: '/home/dev/'
             },
             {
-                title: '开发日志', path: '/log/'
+                title: '开发日志', path: '/home/log/'
             },
+            {
+                title: '捐赠', path: 'https://pay.yimian.xyz'
+            }
         ],
     },
     plugins: [
