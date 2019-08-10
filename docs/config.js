@@ -11,7 +11,7 @@ docute.init({
     nav: {
         default: [
             {
-                title: '首页', path: '/en/'
+                title: '首页', path: '/home/'
             }
         ],
     },
@@ -21,7 +21,7 @@ docute.init({
             apiKey: 'aec70fc192b330f4e8045e4dcbda9b9f',
             indexName: 'sola',
             tags: ['zh-Hans'],
-            url: 'http://wiot.eee.dog'
+            url: 'http://sola.yimian.xyz'
         }),
         evanyou()
     ]
