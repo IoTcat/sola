@@ -1,6 +1,3 @@
-const langs = [
-    { title: '简体中文', path: '/home', matchPath: /^\/(home|ecosystem|support)/ },
-];
 
 docute.init({
     landing: 'landing.html',
@@ -11,8 +8,14 @@ docute.init({
     nav: {
         default: [
             {
-                title: '首页', path: '/home/'
-            }
+                title: '说明文档', path: '/home/'
+            },
+            {
+                title: '开发文档', path: '/dev/'
+            },
+            {
+                title: '开发日志', path: '/log/'
+            },
         ],
     },
     plugins: [
