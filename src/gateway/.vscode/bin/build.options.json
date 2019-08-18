@@ -1,0 +1,10 @@
+{
+  "builtInLibrariesFolders": "D:\\Arduino\\libraries",
+  "customBuildProperties": "build.path=e:\\git\\sola\\src\\gateway\\.vscode\\bin,build.warn_data_percentage=75,runtime.tools.avrdude.path=D:\\Arduino\\hardware\\tools\\avr,runtime.tools.avr-gcc.path=D:\\Arduino\\hardware\\tools\\avr,runtime.tools.arduinoOTA.path=D:\\Arduino\\hardware\\tools\\avr",
+  "fqbn": "arduino:avr:uno",
+  "hardwareFolders": "D:\\Arduino\\hardware",
+  "otherLibrariesFolders": "C:\\Users\\i\\Documents\\Arduino\\libraries",
+  "runtime.ide.version": "10805",
+  "sketchLocation": "e:\\git\\sola\\src\\gateway\\gateway.ino",
+  "toolsFolders": "D:\\Arduino\\tools-builder,D:\\Arduino\\hardware\\tools\\avr"
+}

@@ -1,0 +1,62 @@
+[
+  {
+    "Sourcefile": "",
+    "Include": "",
+    "Includepath": "D:\\Arduino\\hardware\\arduino\\avr\\cores\\arduino"
+  },
+  {
+    "Sourcefile": "",
+    "Include": "",
+    "Includepath": "D:\\Arduino\\hardware\\arduino\\avr\\variants\\standard"
+  },
+  {
+    "Sourcefile": "e:\\git\\sola\\src\\gateway\\.vscode\\bin\\sketch\\gateway.ino.cpp",
+    "Include": "SPI.h",
+    "Includepath": "D:\\Arduino\\hardware\\arduino\\avr\\libraries\\SPI\\src"
+  },
+  {
+    "Sourcefile": "e:\\git\\sola\\src\\gateway\\.vscode\\bin\\sketch\\gateway.ino.cpp",
+    "Include": "LoRa.h",
+    "Includepath": "C:\\Users\\i\\Documents\\Arduino\\libraries\\LoRa\\src"
+  },
+  {
+    "Sourcefile": "e:\\git\\sola\\src\\gateway\\.vscode\\bin\\sketch\\gateway.ino.cpp",
+    "Include": "Wire.h",
+    "Includepath": "D:\\Arduino\\hardware\\arduino\\avr\\libraries\\Wire\\src"
+  },
+  {
+    "Sourcefile": "e:\\git\\sola\\src\\gateway\\.vscode\\bin\\sketch\\gateway.ino.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "e:\\git\\sola\\src\\gateway\\.vscode\\bin\\sketch\\BME280.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "e:\\git\\sola\\src\\gateway\\.vscode\\bin\\sketch\\GY30.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "D:\\Arduino\\hardware\\arduino\\avr\\libraries\\SPI\\src\\SPI.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "C:\\Users\\i\\Documents\\Arduino\\libraries\\LoRa\\src\\LoRa.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "D:\\Arduino\\hardware\\arduino\\avr\\libraries\\Wire\\src\\Wire.cpp",
+    "Include": "",
+    "Includepath": ""
+  },
+  {
+    "Sourcefile": "D:\\Arduino\\hardware\\arduino\\avr\\libraries\\Wire\\src\\utility\\twi.c",
+    "Include": "",
+    "Includepath": ""
+  }
+]
