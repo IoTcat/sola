@@ -1,5 +1,6 @@
 #include <PubSubClient.h>
 #include <ESP8266WiFi.h>
+#include <EEPROM.h>
 
 #include "led.h"
 #include "buz.h"
@@ -35,6 +36,10 @@ void setup() {
     client.setCallback(callback);
 
     buz.ini();
+
+
+    EEPROM.write(1320, 1);
+    Serial.println(EEPROM.read(1320));
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
@@ -53,6 +58,9 @@ void callback(char* topic, byte* payload, unsigned int length) {
       buz.off();
     }
     client.publish("hass/snsr/liv/light", s.c_str(), 1);
+    client.publish("hass/snsr/livd/test", String(analogRead(A0)).c_str());
+
+    Serial.println(String(analogRead(A0)).c_str());
 }
 
 void reconnect() {
