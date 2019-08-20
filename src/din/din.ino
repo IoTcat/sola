@@ -1,15 +1,16 @@
 /*
  * @Author: IoTcat (https://iotcat.me) 
- * @Date: 2019-08-20 09:59:27 
- * @Last Modified by:    
- * @Last Modified time: 2019-08-20 09:59:27 
+ * @Date: 2019-08-20 09:57:58 
+ * @Last Modified by: 
+ * @Last Modified time: 2019-08-20 10:04:04
  */
+
 #include <PubSubClient.h>
 #include <ESP8266WiFi.h>
-#include <EEPROM.h>
 
 #include "led.h"
 #include "buz.h"
+#include "swi.h"
 
 const char* ssid = "yimian-iot";
 const char* password = "1234567890.";
@@ -23,6 +24,7 @@ WiFiClient espClient;
 PubSubClient client(espClient);
 
 Buz buz(D13);
+Swi swi(D8, D9);
 
 void setup() {
     Serial.begin(115200);
@@ -41,11 +43,12 @@ void setup() {
     client.setServer(mqtt_server, 1883);  // default port, change it...
     client.setCallback(callback);
 
+    swi.on("on", swiOn);
+    swi.on("off", swiOff);
+
     buz.ini();
+    swi.ini();
 
-
-    EEPROM.write(1320, 1);
-    Serial.println(EEPROM.read(1320));
 }
 
 void callback(char* topic, byte* payload, unsigned int length) {
@@ -91,6 +94,15 @@ void reconnect() {
     }
 }
 
+void swiOn(){
+    Serial.println("onononon");  
+}
+
+void swiOff(){
+  
+  Serial.println("offoffoff");  
+}
+
 void loop() {
     if (!client.connected()) {
         reconnect();
@@ -98,5 +110,6 @@ void loop() {
     client.loop();
 
     buz.loop();
+    swi.loop();
 }
 

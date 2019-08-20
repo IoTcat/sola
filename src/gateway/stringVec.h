@@ -1,3 +1,9 @@
+/*
+ * @Author: IoTcat (https://iotcat.me) 
+ * @Date: 2019-08-20 09:58:43 
+ * @Last Modified by: 
+ * @Last Modified time: 2019-08-20 09:59:58
+ */
 #ifndef __STRINGVEC__
 #define __STRINGVEC__
 

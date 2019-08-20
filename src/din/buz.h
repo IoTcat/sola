@@ -1,8 +1,8 @@
 /*
  * @Author: IoTcat (https://iotcat.me) 
- * @Date: 2019-08-20 09:59:24 
- * @Last Modified by:    
- * @Last Modified time: 2019-08-20 09:59:24 
+ * @Date: 2019-08-20 09:58:28 
+ * @Last Modified by: 
+ * @Last Modified time: 2019-08-20 10:07:51
  */
 #ifndef __BUZ_H__
 #define __BUZ_H__
@@ -14,14 +14,13 @@ class Buz{
     };
     ~Buz(){};
 
-    void ini(){
+    void ini() const{
         pinMode(this->_pin, OUTPUT);
     };
 
-    void loop(){
+    void loop() const{
         if(millis() < this->_toT){
             analogWrite(this->_pin, (int)((float)((this->_toT - millis()) % 3000) * 255 / 3000));
-            Serial.print(((int)((float)((this->_toT - millis()) % 3000) * 255 / 3000)));
         }else{
             analogWrite(this->_pin, 0);
         }
