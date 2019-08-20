@@ -2,7 +2,7 @@
  * @Author: IoTcat (https://iotcat.me) 
  * @Date: 2019-08-20 09:57:58 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-20 10:04:04
+ * @Last Modified time: 2019-08-20 11:11:31
  */
 
 #include <PubSubClient.h>
@@ -11,12 +11,13 @@
 #include "led.h"
 #include "buz.h"
 #include "swi.h"
+#include "pir.h"
 
 const char* ssid = "yimian-iot";
 const char* password = "1234567890.";
 const char* mqtt_server = "192.168.3.4";  // change this to the mqtt server
 
-const char* topicIn = "hass/ctl/liv/#";  // change this to the outgoing messages
+const char* topicIn = "hass/ctl/din/#";  // change this to the outgoing messages
 const String clientId = "liv";
 
 
@@ -25,6 +26,7 @@ PubSubClient client(espClient);
 
 Buz buz(D13);
 Swi swi(D8, D9);
+Pir p(D10);
 
 void setup() {
     Serial.begin(115200);
@@ -48,6 +50,7 @@ void setup() {
 
     buz.ini();
     swi.ini();
+    p.ini();
 
 }
 
@@ -111,5 +114,14 @@ void loop() {
 
     buz.loop();
     swi.loop();
+    p.loop();
+
+    if(p.isPeopleIn()){
+      Serial.println("ppppppin");
+    }
+
+    if(p.isPeopleOut()){
+      Serial.println("pppppppout");
+      }
 }
 
