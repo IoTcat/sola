@@ -2,7 +2,7 @@
  * @Author: IoTcat (https://iotcat.me) 
  * @Date: 2019-08-30 11:00:00 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-30 11:13:18
+ * @Last Modified time: 2019-08-30 12:35:33
  */
 
 #ifndef __RELAY_H__
@@ -16,10 +16,11 @@ public:
     };
     ~Relay(){};
 
-    inline void ini() const{
+    inline void ini() {
         pinMode(this->_pin, OUTPUT);
+        this->_fStatus = this->getStatus();
     };
-    inline void begin() const{
+    inline void begin() {
         this->ini();
     };
     inline void core() const{};
@@ -41,9 +42,18 @@ public:
         return (digitalRead(this->_pin) == this->_onStatus) ? true : false;
     }
 
+    inline const bool isStateChange() {
+        if(this->getStatus() != this->_fStatus){
+            this->_fStatus = this->getStatus();
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 private:
     unsigned short _pin;
-    bool _onStatus;
+    bool _onStatus, _fStatus;
 
 };
 

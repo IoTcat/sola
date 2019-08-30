@@ -2,7 +2,7 @@
  * @Author: IoTcat (https://iotcat.me) 
  * @Date: 2019-08-20 09:58:28 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-20 10:07:51
+ * @Last Modified time: 2019-08-30 12:35:44
  */
 #ifndef __BUZ_H__
 #define __BUZ_H__
@@ -14,15 +14,18 @@ class Buz{
     };
     ~Buz(){};
 
-    void ini() const{
+    void ini() {
         pinMode(this->_pin, OUTPUT);
+        this->_fStatus = this->getStatus();
     };
 
-    void loop() const{
+    void loop(){
         if(millis() < this->_toT){
             analogWrite(this->_pin, (int)((float)((this->_toT - millis()) % 3000) * 255 / 3000));
+            this->_status = true;
         }else{
             analogWrite(this->_pin, 0);
+            this->_status = false;
         }
     };
 
@@ -38,9 +41,23 @@ class Buz{
         this->_toT = millis() + 3000 * times;
     }
 
+    inline const bool getStatus() const{
+        return this->_status;
+    }
+
+    inline const bool isStateChange() {
+        if(this->_fStatus != this->getStatus()){
+            this->_fStatus = this->getStatus();
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     private:
     static unsigned int _toT;
     unsigned int _pin; 
+    bool _status, _fStatus;
 };
 
 unsigned int Buz::_toT = 0;

@@ -2,7 +2,7 @@
  * @Author: IoTcat (https://iotcat.me) 
  * @Date: 2019-08-20 09:58:21 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-20 10:00:02
+ * @Last Modified time: 2019-08-30 13:12:01
  */
 #ifndef __LED_H__
 #define __LED_H__
@@ -12,32 +12,33 @@ class LED {
 
     LED(const int& pin){
         this->_pin = pin;
-        this->_mode = "null";
+        this->_mode = "on";
     };
     ~LED(){};
 
     inline void on(){
         digitalWrite(this->_pin, HIGH);
-        this->_mode = "null";
+        this->_mode = "on";
     }
 
     inline void off(){
         digitalWrite(this->_pin, LOW);
-        this->_mode = "null";
+        this->_mode = "off";
     }
 
     inline const bool toggle(){
         digitalWrite(this->_pin, !digitalRead(this->_pin));
-        this->_mode = "null";
+        this->_mode = (digitalRead(this->_pin)) ? "on" : "off";
         return digitalRead(this->_pin);
     }
 
-    inline void ini() const{
+    inline void ini(){
         pinMode(this->_pin, OUTPUT);
+        this->_fStatus = this->getMode();
     }
 
     inline void loop() const{
-        if(this->_mode == "null"){
+        if(this->_mode == "on" || this->_mode == "off"){
             return;
         }
 
@@ -73,9 +74,22 @@ class LED {
         this->_period = period;
     }
 
+    inline const String getMode() const{
+        return this->_mode;
+    }
+
+    inline const bool isStateChange(){
+        if(this->_fStatus != this->getMode()){
+            this->_fStatus = this->getMode();
+            return true;
+        }else{
+            return false;
+        }
+    }
+
    private:
    unsigned short _pin;
-   String _mode;
+   String _mode, _fStatus;
    unsigned int _period;
 
 };
