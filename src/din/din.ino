@@ -1,11 +1,5 @@
 /*
  * @Author: IoTcat (https://iotcat.me) 
- * @Date: 2019-08-20 12:16:27 
- * @Last Modified by:    
- * @Last Modified time: 2019-08-20 12:16:27 
- */
-/*
- * @Author: IoTcat (https://iotcat.me) 
  * @Date: 2019-08-20 09:57:58 
  * @Last Modified by: 
  * @Last Modified time: 2019-08-20 11:11:31
@@ -23,20 +17,23 @@ const char* ssid = "yimian-iot";
 const char* password = "1234567890.";
 const char* mqtt_server = "192.168.3.4";  // change this to the mqtt server
 
-const char* topicIn = "hass/ctl/din/#";  // change this to the outgoing messages
-const String clientId = "liv";
+const char* topicInCtl = "hass/ctl/din/#";  // change this to the outgoing messages
+const char* topicInSnsr = "hass/snsr/livb/#";
+const char* topicInSnsr1 = "hass/snsr/hall/#";
+
+const String clientId = "din";
 
 
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-Buz buz(D13);
-Swi swi(D8, D9);
-Pir p(D10);
+Buz buz(D8);
+Swi swi(D1, D2);
+Pir p0(D6), p1(D13), p2(D11), p3(D12);
+LED led(D0);
 
 void setup() {
     Serial.begin(115200);
-
     WiFi.begin(ssid, password);
 
     while (WiFi.status() != WL_CONNECTED) {
@@ -56,7 +53,11 @@ void setup() {
 
     buz.ini();
     swi.ini();
-    p.ini();
+    p0.ini();
+    p1.ini();
+    p2.ini();
+    p3.ini();
+    led.ini();
 
 }
 
@@ -66,10 +67,13 @@ void callback(char* topic, byte* payload, unsigned int length) {
     Serial.print("] ");
     String s = "";
     for (int i = 0; i < length; i++) {
-        Serial.print((char)payload[i]);
         s += (char)payload[i];
     }
+    Serial.print(s);
     Serial.println("");
+
+    if(topic == "")
+
     if(s=="1"){
       buz.once();
     }else{
@@ -92,7 +96,9 @@ void reconnect() {
             // Once connected, publish an announcement...
             // client.publish(topicOut, "Hello from the Gateway!");
             // ... and resubscribe
-            client.subscribe(topicIn);
+            client.subscribe(topicInCtl);
+            client.subscribe(topicInSnsr);
+            client.subscribe(topicInSnsr1);
         } else {
             Serial.print("failed, rc=");
             Serial.print(client.state());
