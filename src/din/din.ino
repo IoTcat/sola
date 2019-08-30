@@ -2,7 +2,7 @@
  * @Author: IoTcat (https://iotcat.me) 
  * @Date: 2019-08-20 09:57:58 
  * @Last Modified by: 
- * @Last Modified time: 2019-08-30 14:21:56
+ * @Last Modified time: 2019-08-30 14:44:11
  */
 
 #include <PubSubClient.h>
@@ -36,6 +36,8 @@ LED led(D0);
 Relay light(D5);
 Mode mode;
 LightCtl lightCtl(&light, &led, &mode);
+
+int pirCnt = 0; //计数区域内激活的pir个数
 
 void setup() {
     Serial.begin(115200);
@@ -133,10 +135,19 @@ void loop() {
         p[i].loop();
         if(p[i].isPeopleIn()){
             client.publish(String("hass/snsr/"+clientId+"/p"+i).c_str(), "1");
+            pirCnt ++;
         }
         if(p[i].isPeopleOut()){
             client.publish(String("hass/snsr/"+clientId+"/p"+i).c_str(), "0");
+            pirCnt --;
         }
+    }
+
+    // Auto & offline Mode
+    if(pirCnt < 0 || pirCnt > pirNum) pirCnt = 0;
+    if(mode.isAuto() && mode.isOffline()){
+        if(pirCnt > 1) lightCtl.on();
+        else lightCtl.off();
     }
 
     // lightCtl trigger
@@ -232,7 +243,7 @@ void mqtt_mode(const String& subject, const String& content){
 }
 
 void mqtt_lightCtl(const String& subject, const String& content){
-    if(subject == String("hass/ctl/"+clientId+"/lightCtl")){
+    if(mode.isAuto() && !mode.isOffline() && subject == String("hass/ctl/"+clientId+"/lightCtl")){
         if(content == "0"){
             lightCtl.off();
         }
@@ -257,7 +268,7 @@ void mqtt_buz(const String& subject, const String& content){
 /**** swi ****/
 void swiToggle(){
     client.publish(String("hass/snsr/"+clientId+"/swi").c_str(), String(swi.state()).c_str());
-
+    lightCtl.toggle();
 }
 
 
