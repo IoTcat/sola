@@ -9,7 +9,7 @@
 #include <ESP8266WiFi.h>
 
 #include "led.h"
-#include "buz.h"
+//#include "buz.h"
 #include "swi.h"
 #include "pir.h"
 #include "relay.h"
@@ -29,15 +29,16 @@ const unsigned short pirNum = 4;
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-Buz buz(D8);
+//Buz buz(D3);
 Swi swi(D1, D2);
 Pir p[pirNum] = {D6, D13, D11, D12};
 LED led(D0);
-Relay light(D5);
+Relay light(D5, false);
 Mode mode;
 LightCtl lightCtl(&light, &led, &mode);
 
 int pirCnt = 0; //计数区域内激活的pir个数
+unsigned long int LastActTime = 0;
 
 void setup() {
     Serial.begin(115200);
@@ -58,7 +59,7 @@ void setup() {
     swi.on("toggle", swiToggle);
 
 
-    buz.ini();
+    //buz.ini();
     swi.ini();
     for(auto i : p){
         i.ini();
@@ -85,7 +86,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     mqtt_refresh(topic, s);
     mqtt_mode(topic, s);
     mqtt_lightCtl(topic, s);
-    mqtt_buz(topic, s);
+    //mqtt_buz(topic, s);
 
 }
 
@@ -127,8 +128,9 @@ void loop() {
     client.loop();
 
     // component core
-    buz.loop();
+    //buz.loop();
     swi.loop();
+    led.loop();
 
     // pir snsr
     for(unsigned short i = 0; i < pirNum; i ++){
@@ -146,8 +148,11 @@ void loop() {
     // Auto & offline Mode
     if(pirCnt < 0 || pirCnt > pirNum) pirCnt = 0;
     if(mode.isAuto() && mode.isOffline()){
-        if(pirCnt > 1) lightCtl.on();
-        else lightCtl.off();
+        if(pirCnt > 1) {
+            lightCtl.on();
+            LastActTime = millis();
+        }
+        else if(pirCnt == 0 && LastActTime > millis()-5000) lightCtl.off();
     }
 
     // lightCtl trigger
@@ -159,9 +164,9 @@ void loop() {
         client.publish(String("hass/snsr/"+clientId+"/light").c_str(), String(light.getStatus()).c_str());
     }
    // buz trigger
-   if(buz.isStateChange()){
+   /*if(buz.isStateChange()){
         client.publish(String("hass/snsr/"+clientId+"/buz").c_str(), String(buz.getStatus()).c_str());
-   } 
+   } */
     // led trigger
     if(led.isStateChange()){
         client.publish(String("hass/snsr/"+clientId+"/led").c_str(), led.getMode().c_str());
@@ -195,7 +200,7 @@ void mqtt_refresh(const String& subject, const String& content){
         client.publish(String("hass/snsr/"+clientId+"/mode/isMidnight").c_str(), String(mode.isMidnight()).c_str());
         client.publish(String("hass/snsr/"+clientId+"/mode/isOffline").c_str(), String(mode.isOffline()).c_str());
         client.publish(String("hass/snsr/"+clientId+"/light").c_str(), String(light.getStatus()).c_str());
-        client.publish(String("hass/snsr/"+clientId+"/buz").c_str(), String(buz.getStatus()).c_str());
+        //client.publish(String("hass/snsr/"+clientId+"/buz").c_str(), String(buz.getStatus()).c_str());
         client.publish(String("hass/snsr/"+clientId+"/swi").c_str(), String(swi.state()).c_str());
         for(unsigned short i = 0; i < pirNum; i ++){
             client.publish(String("hass/snsr/"+clientId+"/p"+i).c_str(), String(p[i].getState()).c_str());
@@ -253,7 +258,7 @@ void mqtt_lightCtl(const String& subject, const String& content){
     }
 }
 
-void mqtt_buz(const String& subject, const String& content){
+/*void mqtt_buz(const String& subject, const String& content){
     if(subject == String("hass/ctl/"+clientId+"/buz")){
         if(content == "0"){
             buz.off();
@@ -263,12 +268,13 @@ void mqtt_buz(const String& subject, const String& content){
         }
     }
 }
-
+*/
 
 /**** swi ****/
 void swiToggle(){
     client.publish(String("hass/snsr/"+clientId+"/swi").c_str(), String(swi.state()).c_str());
-    lightCtl.toggle();
+    //lightCtl.toggle();
+    light.toggle();
 }
 
 
