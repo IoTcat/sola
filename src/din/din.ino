@@ -86,6 +86,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
     mqtt_refresh(topic, s);
     mqtt_mode(topic, s);
     mqtt_lightCtl(topic, s);
+    mqtt_light(topic, s);
     //mqtt_buz(topic, s);
 
 }
@@ -178,7 +179,7 @@ void loop() {
     if(mode.isAutoChange()){
         client.publish(String("hass/snsr/"+clientId+"/mode/isAuto").c_str(), String(mode.isAuto()).c_str());
     }
-    if(mode.isMidnight()){
+    if(mode.isMidnightChange()){
         client.publish(String("hass/snsr/"+clientId+"/mode/isMidnight").c_str(), String(mode.isMidnight()).c_str());
     }
     if(mode.isOfflineChange()){
@@ -257,6 +258,18 @@ void mqtt_lightCtl(const String& subject, const String& content){
         }
     }
 }
+
+void mqtt_light(const String& subject, const String& content){
+    if(subject == String("hass/ctl/"+clientId+"/light")){
+        if(content == "0"){
+            light.off();
+        }
+        if(content == "1"){
+            light.on();
+        }
+    }
+}
+
 
 /*void mqtt_buz(const String& subject, const String& content){
     if(subject == String("hass/ctl/"+clientId+"/buz")){
