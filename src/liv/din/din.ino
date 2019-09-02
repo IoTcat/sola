@@ -20,10 +20,10 @@ const char* ssid = "yimian-iot";
 const char* password = "1234567890.";
 const char* mqtt_server = "192.168.3.4";  // change this to the mqtt server
 
-const char* topicInCtl = "hass/ctl/liv/#";  // change this to the outgoing messages
+const char* topicInCtl = "hass/ctl/din/#";  // change this to the outgoing messages
 const char* topicInRefresh = "hass/refresh";
 
-const String clientId = "liv";
+const String clientId = "din";
 const unsigned short pirNum = 4;
 
 WiFiClient espClient;
