@@ -1,9 +1,3 @@
-/*
- * @Author: IoTcat (https://iotcat.me) 
- * @Date: 2019-08-20 09:58:47 
- * @Last Modified by: 
- * @Last Modified time: 2019-08-20 09:59:57
- */
 #ifndef __LORA_SOCKET_H__
 #define __LORA_SOCKET_H__
 
@@ -39,47 +33,19 @@ class LoRaSocket {
     inline static void onReceived(void (*f)(String, String, String, String)){
         _f = f;
     };
-    inline bool isNewMsg(){
-        isLoopMode = true;
-        return (newType == "") ? false : true;
-    };
-    inline const String getNewMsg(){
-        String msg = newMsg;
-        clearNewMsg();
-        return msg;
-    };
-    inline void getNewMsg(String& msg, String& from, String& to, String& type){
-        msg = newMsg;
-        from = newFrom;
-        to = newTo;
-        type = newType;
-        clearNewMsg();
-    };
+
 
    private:
     static StringVec tcp_sendingStack, tcp_receiveStack;
     static Vector<unsigned int> tcp_sendingTryTimes;
     static void(*_f)(String, String, String, String);
-    static String newMsg, newFrom, newTo, newType;
-    static bool isLoopMode;
-    inline void clearNewMsg(){
-        newMsg = "";
-        newFrom = "";
-        newTo = "";
-        newType = "";
-    };
     inline static void _onReceived(const String& msg, const String& from, const String& to, const String& type){
-        newMsg = msg;
-        newFrom = from;
-        newTo = to;
-        newType = type;
-        if(!isLoopMode) (*_f)(msg, from, to, type);
+        (*_f)(msg, from, to, type);
     };
   /* LoRa Functions */
     static void LoRa_tx_mode();
     static void LoRa_rx_mode();
     static void send(const String& s);
-    static void send(const char *s);
     static const String receiveMsg();
     /* Package Functions */
     inline static const String getIPHeader(const String& to = "0.0.0.0"){
@@ -187,12 +153,9 @@ void LoRaSocket::getMsg(const String& msg){
 }
 
 void LoRaSocket::udp(const String& msg, const String& to){
-    char *c;
-    c = (char*)malloc((msg.length()+39)*sizeof(char));
-    sprintf(c, "udp|%s%s|", getIPHeader(to).c_str(), encode(msg).c_str());
-    sprintf(c, "%s%s", c, hash(c).c_str());
-    send(c);
-    free(c);
+    String fin = "udp|"+ getIPHeader(to) + encode(msg) + "|";
+    fin += hash(fin);
+    send(fin);
 };
 
 
@@ -216,8 +179,6 @@ void LoRaSocket::rtcp(const String& msg){
 StringVec LoRaSocket::tcp_sendingStack, LoRaSocket::tcp_receiveStack;
 Vector<unsigned int> LoRaSocket::tcp_sendingTryTimes;
 void (*LoRaSocket::_f)(String, String, String, String);
-String LoRaSocket::newMsg = "", LoRaSocket::newFrom = "", LoRaSocket::newTo = "", LoRaSocket::newType = "";
-bool LoRaSocket::isLoopMode = false;
 
 void LoRaSocket::ini() {
 
@@ -244,16 +205,6 @@ void LoRaSocket::LoRa_rx_mode(){
     LoRa.receive();
 }
 
-void LoRaSocket::send(const char *s){
-    LoRa_tx_mode();
-    delay(200);
-    LoRa.beginPacket();
-    LoRa.print(s);
-    LoRa.endPacket();
-    delay(200);
-    LoRa_rx_mode();
-}
-
 void LoRaSocket::send(const String& s){
   LoRa_tx_mode();
   delay(200);
@@ -269,7 +220,7 @@ const String LoRaSocket::receiveMsg(){
     String s = "";
     while (LoRa.available()) {
         s += (char)LoRa.read();
-    }Serial.println(s);
+    }
     return s;
 }
 
