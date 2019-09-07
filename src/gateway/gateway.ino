@@ -41,6 +41,7 @@ const char* mqtt_server = "192.168.3.4";//change this to the mqtt server
 char* topicIn="#";//change this to the outgoing messages
 String cache_mqtt_publish = "";
 String cache_mqtt_subject = "";
+bool isStarted = false;
 
 
 WiFiClient espClient;
@@ -140,7 +141,8 @@ void callback(char* topic, byte* payload, unsigned int length) {
 
   router_print(String(topic) + " " + s);
 
-  mqtt.publish(String(topic), s);
+  if(String(topic) == "hass/ctl/wc0/valve") mqtt.publish(String(topic), s);
+  if(String(topic) == "hass/refresh") mqtt.publish(String(topic), s);
 
   if(String(topic) == "hass/snsr/hall/light"){
       if(s == "1") oled_print("hall light on");
@@ -163,6 +165,17 @@ void callback(char* topic, byte* payload, unsigned int length) {
       if(s == "0") mode_print("Day Mode");
       if(s == "1") mode_print("Night Mode");
    }
+
+  if(String(topic) == "hass/snsr/hall/doorTelSwi"){
+      if(s == "0") oled_print("Door Tel Off");
+      if(s == "1") oled_print("Door Tel On");
+   }
+
+
+  if(String(topic) == "hass/snsr/hall/doorSwi"){
+      if(s == "1") oled_print("Unit Door On");
+   }
+   
    if(String(topic) == "hass/ctl/kit/mode/isMidnight"){
       if(s == "1") mode_print("MidNight Mode");
    }
@@ -200,6 +213,7 @@ void reconnect() {
       Serial.println("connected");
       oled_print("MQTT ok..");
       ini_print();
+      isStarted = true;
       // Once connected, publish an announcement...
       //client.publish(topicOut, "Hello from the Gateway!");
       // ... and resubscribe
@@ -210,6 +224,7 @@ void reconnect() {
       Serial.print(client.state());
       Serial.println(" try again in 5 seconds");
       // Wait 3 seconds before retrying
+      if(isStarted) ESP.restart();
       delay(3000);
     }
   }
