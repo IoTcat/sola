@@ -42,6 +42,7 @@ char* topicIn="#";//change this to the outgoing messages
 String cache_mqtt_publish = "";
 String cache_mqtt_subject = "";
 bool isStarted = false;
+unsigned int g_cnt = 0;
 
 
 WiFiClient espClient;
@@ -127,7 +128,8 @@ Serial.println("LoRa Receiver");
 
 
 void callback(char* topic, byte* payload, unsigned int length) {
- 
+
+  g_cnt ++;
   Serial.print("Message arrived [");
   Serial.print(topic);
   Serial.print("] ");
@@ -195,7 +197,7 @@ void callback(char* topic, byte* payload, unsigned int length) {
    if(String(topic) == "peo/kit"){
       oled_print("kit - num " + s);
    }
-   
+   if(g_cnt > 1000) ESP.restart();
   //send to LoRa nodes..
   //sendToNode();
 
