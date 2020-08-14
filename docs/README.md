@@ -11,7 +11,7 @@ Sola的意思是天空，被太阳照射的地方。祝愿Sola Proj能够成为�
 [https://sola.yimian.xyz](https://sola.yimian.xyz)
 
 **FTP家庭网盘**
-[ftps://home.yimian.xyz:2121](ftps://home.yimian.xyz:2121)
+[https://home.yimian.xyz/pan](https://home.yimian.xyz/pan)
 
 **项目博客**
 [https://www.eee.dog/tech/smart-home.html](https://www.eee.dog/tech/smart-home.html)
@@ -120,12 +120,12 @@ Sola的意思是天空，被太阳照射的地方。祝愿Sola Proj能够成为�
  - 打开/关闭餐厅的灯
  - 打开/关闭客厅的灯
  - 打开/关闭走廊的灯
- - 打开楼下开关（单元门）
+ - 开门/打开单元门 (打开楼下开关)
  - 打开/关闭浴室开关（换热器电磁阀）
- - 打开/关闭一楼开关（智慧照明）
- - 打开二楼开关（白天模式）
- - 打开三楼开关（夜间模式）
- - 打开四楼开关（午夜模式）
+ - 自动模式/打开智慧灯控（打开/关闭一楼开关）
+ - 白天模式/打开白天模式（打开二楼开关）
+ - 夜间模式/打开夜间模式（打开三楼开关）
+ - 午夜模式/打开午夜模式（打开四楼开关）
  - 播放音乐
  - 最新新闻
  - 早上好
