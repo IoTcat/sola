@@ -33,7 +33,7 @@ Actual realization: The original single-opening is transformed into double-openi
 
 ## Communication Design
 
-![Network Topology Diagram](https://api.yimian.xyz/img/?path=imgbed/img_43b85bd4_1096x660_8_null_normal.png)
+![Network Topology Diagram](docs/img/img_43b85bd4_1096x660_8_null_normal.png)
 
 Two communication modes of WiFi+LoRa are adopted. In scenarios that require high-speed and high-quality communication, such as Tmall Genie, mobile phones, and notebooks, use WiFi as a means of communication. In places where the WiFi signal is unstable, use LoRa for communication. Use MQTT as the application layer protocol.
 
@@ -41,7 +41,7 @@ Two communication modes of WiFi+LoRa are adopted. In scenarios that require high
 
 Use the python3 open source project Home Assistant as the basis to build the main control system of this project. The effect is as follows:
 
-![Sola Website](https://api.yimian.xyz/img/?path=imgbed/img_c1a1b81_1895x859_8_null_normal.jpeg)
+![Sola Website](docs/img/img_c1a1b81_1895x859_8_null_normal.jpeg)
 
 ## Multimedia system design
 
@@ -58,5 +58,5 @@ In the local area network, since the home is a win system, smb is used as a shar
 
 The following is a screenshot of the web interface:
 
-![NAS Web Page](https://api.yimian.xyz/img/?path=imgbed/img_352da66_1866x814_8_null_normal.jpeg)
+![NAS Web Page](docs/img/img_352da66_1866x814_8_null_normal.jpeg)
 
