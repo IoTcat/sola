@@ -41,7 +41,7 @@ Two communication modes of WiFi+LoRa are adopted. In scenarios that require high
 
 Use the python3 open source project Home Assistant as the basis to build the main control system of this project. The effect is as follows:
 
-![Sola Website](docs/img/img_c1a1b81_1895x859_8_null_normal.jpeg)
+![Sola Website](docs/img/Snipaste_2020-09-08_20-19-50.png)
 
 ## Multimedia system design
 
@@ -58,5 +58,5 @@ In the local area network, since the home is a win system, smb is used as a shar
 
 The following is a screenshot of the web interface:
 
-![NAS Web Page](docs/img/img_352da66_1866x814_8_null_normal.jpeg)
+![NAS Web Page](docs/img/Snipaste_2020-09-08_20-20-31.png)
 
