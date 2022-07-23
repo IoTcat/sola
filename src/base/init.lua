@@ -3,11 +3,12 @@ __main = coroutine.create(function(__run)
     --Packages Used: file, timer, node, wifi, net, mqtt, gpio, uart
     --Global Constant
     -----------------
+    VERSION = 'v1.0';
     HOSTNAME = file.getcontents('cfg/HOSTNAME') or 'default';
     WIFI_SSID = file.getcontents('cfg/WIFI_SSID') or 'sola';
     WIFI_PASSWD = file.getcontents('cfg/WIFI_PASSWD') or 'c5ce4dfbbd7f';
-    MQTT_SERVER = file.getcontents('cfg/MQTT_SERVER') or '192.168.3.4';
-    MQTT_PORT = file.getcontents('cfg/MQTT_PORT') or '1884';
+    MQTT_SERVER = file.getcontents('cfg/MQTT_SERVER') or '192.168.3.6';
+    MQTT_PORT = file.getcontents('cfg/MQTT_PORT') or '1883';
     SCRIPT = 'script.lua';
     MQTT_KEEP_ALIVE = 60;
     MQTT_TOPIC_PREFIX = '/hass/'..HOSTNAME..'/';
