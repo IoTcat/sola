@@ -1,42 +1,28 @@
-SWI = function(PO, PI, f, t)
-local T, sa, sc, sl, su, sd, G2 = 2, {}, 1, 0, F.n('su'), F.n('sd'), F.n('G2');
-gpio.mode(PO, gpio.OUTPUT);
-gpio.mode(PI, gpio.INPUT);
-tmr.create():alarm(t or 5, tmr.ALARM_AUTO, function()
-gpio.write(2, sc%2);
-sa[sc] = (gpio.read(5) + sc%2) % 2;
-sc = sc + 1;
-if sc > 20 then
-local s = 0;
-for _,v in pairs(sa) do
-    s = s + v;
+if adc.force_init_mode(adc.INIT_ADC) then
+    node.restart()
+    return
 end
---REG(M..'a', s..','..sd..','..su..','..G2);
-if math.abs(s - sd) < T and math.abs(s - su) >= T then
-    if G2 == 0 then
-        G2 = 1;
-        F.s('G2', G2);
-        f(0);
+SWI = function(f, T, TH)
+    local s, fv = F.n('swi'), adc.read(0);
+    local trig = function(v)
+        if s ~= v then
+            f(v);
+            s = v;
+            F.s('swi', s);
+        end
     end
-elseif math.abs(s - sd) >= T and math.abs(s - su) < T then
-    if G2 == 1 then
-        G2 = 0;
-        F.s('G2', G2);
-        f(1);
-    end
-else
-    if s > sl then
-        su = s;
-        sd = sl;
-    else
-        su = sl;
-        sd = s;
-    end
-    F.s('su', su);
-    F.s('sd', sd);
-end
-sl = s;
-sc= 1;
-end
-end);
+    tmr.create():alarm(50, tmr.ALARM_AUTO, function()
+        local v = adc.read(0);
+        if DEBUG then 
+            REG(M..'debug/swi', v..','..(v-fv));
+        end
+        if math.abs(fv - v) > (TH or 100) then
+            if v > (T or 800) then
+                trig(1);
+            else
+                trig(0);
+            end
+        end
+        fv = v;
+    end);    
 end

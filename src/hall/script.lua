@@ -1,7 +1,5 @@
-P_SWI_O = 2;
-P_SWI_I = 5;
 P_RLY = 1;
-P_TRIGER = 6;
+P_TRIGER = 5;
 M = MQTT_TOPIC_PREFIX;
 
 dofile('utils.lua');
@@ -16,7 +14,8 @@ D = RLY(P_TRIGER, function(c)
         REG(M..'snsr/door', c);
     end
 end);
-SWI(P_SWI_O, P_SWI_I, function(c)
+D(0);
+SWI(function(c)
     REG(M..'snsr/swi', c);
     R(R()+1);
 end);
