@@ -8,12 +8,12 @@ dofile('swi.lua');
 
 R = RLY(P_RLY, function(c)
     REG(M..'snsr/light', c);
-end);
+end, 0);
 D = RLY(P_TRIGER, function(c)
     if c == 1 then
         REG(M..'snsr/door', c);
     end
-end);
+end, 0);
 D(0);
 SWI(function(c)
     REG(M..'snsr/swi', c);

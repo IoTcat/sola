@@ -1,5 +1,5 @@
 P_RLY = 1;
-P_FM = 2;
+P_FM = 5;
 M = MQTT_TOPIC_PREFIX;
 MQTT_KEEP_ALIVE = 10;
 
@@ -9,9 +9,9 @@ dofile('fm.lua');
 
 R = RLY(P_RLY, function(c)
     REG(M..'snsr/valve', c);
-end);
+end, 1);
 
-F = FM(P_FM, function(v)
+FM(P_FM, function(v)
     REG(M..'snsr/flowmeter', v);
 end);
 

@@ -3,8 +3,10 @@ FM = function(PIN, f)
     gpio.mode(PIN, gpio.INT);
     gpio.trig(PIN, 'up', function()
         v = v + 1;
-        F.s('fm'..PIN, v);
-        f(v);
+        if v%450 == 0 then
+            f(v/450);
+            F.s('fm'..PIN, v);
+        end
     end);
     return function()
         return v;
