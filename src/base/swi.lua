@@ -11,7 +11,7 @@ SWI = function(f, T, TH)
             F.s('swi', s);
         end
     end
-    tmr.create():alarm(50, tmr.ALARM_AUTO, function()
+    tmr.create():alarm(250, tmr.ALARM_AUTO, function()
         local v = adc.read(0);
         if DEBUG then 
             REG(M..'debug/swi', v..','..(v-fv));
