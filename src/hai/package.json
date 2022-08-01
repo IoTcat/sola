@@ -1,0 +1,12 @@
+{
+  "name": "hai",
+  "version": "1.0.0",
+  "description": "AI system for SOLA.",
+  "main": "index.js",
+  "repository": "https://github.com/IoTcat/sola/tree/master/src/hai",
+  "author": "IoTcat",
+  "license": "MIT",
+  "dependencies": {
+    "mqtt": "^4.3.7"
+  }
+}
